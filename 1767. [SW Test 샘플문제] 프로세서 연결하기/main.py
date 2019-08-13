@@ -1,76 +1,80 @@
-import copy
-
-
-def left_check(point, _map_list):
+def all_check(point, _map_list, direction):
     h, w = point
-    for _width in range(w):
-        if _map_list[h][_width] != 0:
-            for __width in range(_width):
-                _map_list[h][__width] = 0
-
-            _map_list[h][w] = 3
-            return
-        else:
-            _map_list[h][_width] = 1
-    _map_list[h][w] = 2
     global result
-    result += 1
     global line
-    line += w
+    remove_list = []
+    if direction == 0:
+        for _width in range(w):
+            if _map_list[h][_width] != 0:
+                for _remove in remove_list:
+                    _map_list[h][_remove] = 0
+
+                _map_list[h][w] = 3
+                return
+            else:
+                remove_list.append(_width)
+                _map_list[h][_width] = 1
+        _map_list[h][w] = 2
+        result += 1
+        line += w
+    elif direction == 1:
+        for _width in range(n - w - 1):
+            if _map_list[h][n - _width - 1] != 0:
+                for _remove in remove_list:
+                    _map_list[h][_remove] = 0
+                _map_list[h][w] = 3
+                return
+            else:
+                remove_list.append(n - _width - 1)
+                _map_list[h][n - _width - 1] = 1
+        _map_list[h][w] = 2
+        result += 1
+        line += n - w - 1
+    elif direction == 2:
+        for _height in range(h):
+            if _map_list[_height][w] != 0:
+                for _remove in remove_list:
+                    _map_list[_remove][w] = 0
+
+                _map_list[h][w] = 3
+                return
+            else:
+                remove_list.append(_height)
+                _map_list[_height][w] = 1
+        _map_list[h][w] = 2
+        result += 1
+        line += h
+    elif direction == 3:
+        for _height in range(n - h - 1):
+            if _map_list[n - _height - 1][w] != 0:
+                for _remove in remove_list:
+                    _map_list[_remove][w] = 0
+
+                _map_list[h][w] = 3
+                return
+            else:
+                remove_list.append(n - _height - 1)
+                _map_list[n - _height - 1][w] = 1
+        _map_list[h][w] = 2
+        result += 1
+        line += n - h - 1
+    return True
 
 
-def right_check(point, _map_list):
+def all_roll_back(point, _map_list, direction):
     h, w = point
-    for _width in range(n - w - 1):
-        if _map_list[h][n - _width - 1] != 0:
-            for __width in range(n - _width - 1):
-                _map_list[h][n - __width - 1] = 0
-            _map_list[h][w] = 3
-            return
-        else:
-            _map_list[h][n - _width - 1] = 1
-    _map_list[h][w] = 2
-    global result
-    result += 1
-    global line
-    line += n - w - 1
-
-
-def upper_check(point, _map_list):
-    h, w = point
-    for _height in range(h):
-        if _map_list[_height][w] != 0:
-            for __height in range(_height):
-                _map_list[__height][w] = 0
-
-            _map_list[h][w] = 3
-            return
-        else:
-            _map_list[_height][w] = 1
-    _map_list[h][w] = 2
-    global result
-    result += 1
-    global line
-    line += h
-
-
-def down_check(point, _map_list):
-    h, w = point
-
-    for _height in range(n - h - 1):
-        if _map_list[n - _height - 1][w] != 0:
-            for __height in range(n - _height - 1):
-                _map_list[__height][w] = 0
-
-            _map_list[h][w] = 3
-            return
-        else:
-            _map_list[n - _height - 1][w] = 1
-    _map_list[h][w] = 2
-    global result
-    result += 1
-    global line
-    line += n - h - 1
+    if direction == 0:
+        for _width in range(w):
+            _map_list[h][_width] = 0
+    elif direction == 1:
+        for _width in range(n - w - 1):
+            _map_list[h][n - _width - 1] = 0
+    elif direction == 2:
+        for _height in range(h):
+            _map_list[_height][w] = 0
+    elif direction == 3:
+        for _height in range(n - h - 1):
+            _map_list[n - _height - 1][w] = 0
 
 
 def dfs(_map_list=None, _saved_list=[]):
@@ -78,7 +82,10 @@ def dfs(_map_list=None, _saved_list=[]):
     global max_result
     global line
     global min_line
-    if len(_saved_list) == 0:
+    saved_list_len = len(_saved_list)
+    if saved_list_len + result < max_result:
+        return
+    if saved_list_len == 0:
         if max_result < result:
             max_result = result
             min_line = line
@@ -86,35 +93,19 @@ def dfs(_map_list=None, _saved_list=[]):
             if min_line > line:
                 min_line = line
         return
-    saved_list_copy = copy.deepcopy(_saved_list)
+    saved_list_copy = _saved_list.copy()
     saved_list_copy_pop = saved_list_copy.pop(0)
-    map_list_copy = copy.deepcopy(_map_list)
     _result_copy = result
     line_copy = line
-    left_check(saved_list_copy_pop[0], _map_list)
+    for _direction in range(4):
+        reuslt_temp = all_check(saved_list_copy_pop[0], _map_list, _direction)
+        dfs(_map_list, saved_list_copy)
+        if reuslt_temp == True:
+            all_roll_back(saved_list_copy_pop[0], _map_list, _direction)
+
+        result = _result_copy
+        line = line_copy
     dfs(_map_list, saved_list_copy)
-    _map_list = copy.deepcopy(map_list_copy)
-    result = _result_copy
-    line = line_copy
-    right_check(saved_list_copy_pop[0], _map_list)
-    dfs(_map_list, saved_list_copy)
-    _map_list = copy.deepcopy(map_list_copy)
-    result = _result_copy
-    line = line_copy
-    upper_check(saved_list_copy_pop[0], _map_list)
-    dfs(_map_list, saved_list_copy)
-    _map_list = copy.deepcopy(map_list_copy)
-    result = _result_copy
-    line = line_copy
-    down_check(saved_list_copy_pop[0], _map_list)
-    dfs(_map_list, saved_list_copy)
-    _map_list = copy.deepcopy(map_list_copy)
-    result = _result_copy
-    line = line_copy
-    dfs(_map_list, saved_list_copy)
-    _map_list = copy.deepcopy(map_list_copy)
-    result = _result_copy
-    line = line_copy
 
 
 test_case_num = int(input())
@@ -154,4 +145,4 @@ for test_case_index in range(test_case_num):
     min_line = n * n
     dfs(map_list, saved_list)
 
-    print(min_line)
+    print("#" + str(test_case_index + 1), min_line)
