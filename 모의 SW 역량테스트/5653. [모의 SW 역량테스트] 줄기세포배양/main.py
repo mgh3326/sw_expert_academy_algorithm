@@ -3,6 +3,10 @@ dy = [0, 1, 0, -1]
 is_cutting = False
 
 
+def double_list_get_list(_input: list, position: list):
+    return _input[position[0]][position[1]]
+
+
 def check_map(dir_idx: int, _peak: list):
     global map_list
     global result
@@ -59,29 +63,63 @@ def dfs(_peak: list):
         _peak[1] = _peak[1] + nx * -1
 
 
+def breaking_brick(point: list):
+    value = double_list_get_list(map_list, point)
+    removed_list = []
+    for dir_idx in range(len(dx)):
+        temp_removed_list = []
+        nx, ny = dx[dir_idx], dy[dir_idx]
+        for value_index in range(1, value):
+            new_point_h = point[0] + ny * value_index
+            new_point_w = point[1] + nx * value_index
+            new_point = [new_point_h, new_point_w]
+            value = double_list_get_list(map_list, new_point)
+            breaking_brick(new_point)
+            print(value_index)
+        removed_list.append(temp_removed_list)
+
+    first_shout_result = first_shout()
+    if first_shout_result == False:
+        return
+    elif first_shout_result == True:
+        return True
+
+
 test_case_num = int(input())
+
+
+def find_top_level(w_pram):
+    global map_list
+    for _h_index in range(h):
+        if map_list[_h_index][w_pram] != 0:
+            return _h_index
+    return -1
+
+
+def first_shout():
+    global n
+    n -= 1
+    if n == 0:
+        return False
+    for _w_index in range(w):
+        h_index = find_top_level(_w_index)
+        if h_index != -1:
+            breaking_brick([h_index, _w_index])
+    return True  # 벽돌을 다 깬 경우
+
+
 for test_case_index in range(test_case_num):
-    max_result = 1
-    n, k = map(int, input().split())
+    n, w, h = map(int, input().split())
     # 입력의 첫 번째 줄은 배열의 행 수입니다.
     map_list = []
-    max_value = 0
-    peak_list = []
-    for i in range(n):
+    result = 0
+    for i in range(h):
         temp_list = list(map(int, input().split()))
-        temp_max_value = max(temp_list)
-        if temp_max_value > max_value:
-            max_value = temp_max_value
+        for temp in temp_list:
+            if temp != 0:
+                result += 1
         map_list.append(temp_list)
+    min_result = result
+    first_shout()
 
-    for i in range(n):
-        for j in range(n):
-            if map_list[i][j] == max_value:
-                peak_list.append([i, j])
-            map_list[i][j] = [map_list[i][j], False]
-    for peak in peak_list:
-        map_list[peak[0]][peak[1]][1] = True
-        result = 1
-        dfs(peak)
-        map_list[peak[0]][peak[1]][1] = False
-    print("#%d %d" % (test_case_index + 1, max_result))
+    print("#%d %d" % (test_case_index + 1, min_result))
