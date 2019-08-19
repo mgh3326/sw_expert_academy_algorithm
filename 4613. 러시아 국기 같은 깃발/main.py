@@ -17,6 +17,7 @@ def to_russia(blue_index):
         min_result_value = temp_result
 
 
+# TODO 스택 오버플로우가 나온다 왜 그러지
 test_case_num = int(input())
 for test_case_index in range(test_case_num):
     n, m = map(int, input().split())
