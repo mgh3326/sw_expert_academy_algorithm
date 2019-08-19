@@ -32,15 +32,15 @@ for test_case_index in range(test_case_num):
             1: 0,
             2: 0
         }
-        for temp in temp_str:
+        for temp_index in range(len(temp_str)):
             if i == 0:
-                if temp != 'W':
+                if temp_str[temp_index] != 'W':
                     result_value += 1
             elif i == n - 1:
-                if temp != 'R':
+                if temp_str[temp_index] != 'R':
                     result_value += 1
             else:
-                temp_dict[my_dict[temp]] += 1
+                temp_dict[my_dict[temp_str[temp_index]]] += 1
         if i != 0 and i != n - 1:
             my_list.append(temp_dict)
     for i in range(len(my_list)):
