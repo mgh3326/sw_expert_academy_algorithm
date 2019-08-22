@@ -8,7 +8,7 @@ def double_list_get_list(_input: list, position: list):
 
 
 def grow_cells():
-    global map_list
+    global my_list
     global result
     for cell in reversed(cell_list):
 
@@ -48,9 +48,9 @@ for test_case_index in range(test_case_num):
     count = 0
     # 입력의 첫 번째 줄은 배열의 행 수입니다.
     result = 0
-    map_list = []
+    my_list = []
     for i in range(2 * k + n):
-        map_list.append([0] * (2 * k + m))
+        my_list.append([0] * (2 * k + m))
     cell_list = []
 
     for i in range(n):
@@ -70,10 +70,10 @@ for test_case_index in range(test_case_num):
                         (k + i, k + temp_index),
                         temp_list[temp_index]
                     ])
-            map_list[k + i][k + temp_index] = temp_list[temp_index]
+            my_list[k + i][k + temp_index] = temp_list[temp_index]
     for k_index in range(k):
         print(k_index)
-        for _map in map_list:
+        for _map in my_list:
             print(_map)
         grow_cells()
     print("#%d %d" % (test_case_index + 1, result))

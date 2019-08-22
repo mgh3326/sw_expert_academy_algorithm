@@ -116,7 +116,7 @@ for test_case_index in range(test_case_num):
 
     max_result = 0
     # 입력의 첫 번째 줄은 배열의 행 수입니다.
-    map_list = []
+    my_list = []
     # 입력을 받되 첫줄 혹은 끝줄의 경우 2(전선 연결 완료)로 표시하도록 하자
     saved_list = []
     for i in range(n):
@@ -138,11 +138,11 @@ for test_case_index in range(test_case_num):
                     if temp == 1:
                         saved_list.append([(i, idx), 0])
 
-        map_list.append(temp_list)
+        my_list.append(temp_list)
 
     max_result = result
     line = 0
     min_line = n * n
-    dfs(map_list, saved_list)
+    dfs(my_list, saved_list)
 
     print("#" + str(test_case_index + 1), min_line)
