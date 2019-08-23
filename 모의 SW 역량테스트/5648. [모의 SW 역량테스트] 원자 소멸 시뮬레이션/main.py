@@ -15,6 +15,7 @@ for test_case_index in range(test_case_num):
     remove_list = []
     for i in range(n):
         temp_list = list(map(int, input().split()))
+        temp_list.append(False)
         my_list.append(temp_list)
     while True:
         if len(my_list) == 0:
@@ -25,13 +26,17 @@ for test_case_index in range(test_case_num):
             my[0] = my[0] + nx
             my[1] = my[1] + ny
             if my[0] > 1000 or my[0] < -1000 or my[1] > 1000 or my[1] < -1000:  # 튀어 나갔을 경우 1000말고 더 작게 할수도 있을것 같다
-                if idx * -1 not in remove_list:
-                    heapq.heappush(remove_list, idx * -1)
+                my[4] = True
+                heapq.heappush(remove_list, idx * -1)
         for _ in range(len(remove_list)):
             heappop = heapq.heappop(remove_list) * -1
             my_list.pop(heappop)
         for idx, my in enumerate(my_list):
+            if my[4] == True:
+                continue
             for i in list(range(0, idx)) + list(range(idx + 1, len(my_list))):
+                if my_list[i][4] == True:
+                    continue
                 if (my[0] == my_list[i][0] and my[1] == my_list[i][1]) or (
                         my[0] == my_list[i][0] + 1 and my[1] == my_list[i][1] and my[2] == 2 and my_list[i][
                     2] == 3) or (
@@ -43,10 +48,10 @@ for test_case_index in range(test_case_num):
                     result = result + my[3] + my_list[i][3]
                     my[3] = 0
                     my_list[i][3] = 0
-                    if idx * -1 not in remove_list:
-                        heapq.heappush(remove_list, idx * -1)
-                    if i * -1 not in remove_list:
-                        heapq.heappush(remove_list, i * -1)
+                    my[4] = True
+                    my_list[i][4] = True
+                    heapq.heappush(remove_list, idx * -1)
+                    heapq.heappush(remove_list, i * -1)
 
         for _ in range(len(remove_list)):
             heappop = heapq.heappop(remove_list) * -1
