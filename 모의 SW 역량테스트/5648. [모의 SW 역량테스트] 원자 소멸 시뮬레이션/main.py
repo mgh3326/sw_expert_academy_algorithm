@@ -13,8 +13,20 @@ for test_case_index in range(test_case_num):
     block_dict = {}
     my_list = []  # 맵 정보
     remove_list = []
+    x_max = -1000
+    y_max = -1000
+    x_min = 1000
+    y_min = 1000
     for i in range(n):
         temp_list = list(map(int, input().split()))
+        if temp_list[0] < x_min:
+            x_min = temp_list[0]
+        if temp_list[0] > x_max:
+            x_max = temp_list[0]
+        if temp_list[1] < y_min:
+            y_min = temp_list[1]
+        if temp_list[1] > y_max:
+            y_max = temp_list[1]
         temp_list.append(False)
         my_list.append(temp_list)
     while True:
@@ -25,7 +37,7 @@ for test_case_index in range(test_case_num):
             nx, ny = dx[dir_idx], dy[dir_idx]
             my[0] = my[0] + nx
             my[1] = my[1] + ny
-            if my[0] > 1000 or my[0] < -1000 or my[1] > 1000 or my[1] < -1000:  # 튀어 나갔을 경우 1000말고 더 작게 할수도 있을것 같다
+            if my[0] > x_max or my[0] < x_min or my[1] > y_max or my[1] < y_min:  # 튀어 나갔을 경우 1000말고 더 작게 할수도 있을것 같다
                 my[4] = True
                 heapq.heappush(remove_list, idx * -1)
         for _ in range(len(remove_list)):
