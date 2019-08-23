@@ -30,23 +30,25 @@ for test_case_index in range(test_case_num):
         temp_list.append(False)
         my_list.append(temp_list)
     while True:
-        if len(my_list) == 0:
+        if len(my_list) <= 1:
             break
-        for idx, my in enumerate(my_list):
+        for my_list_idx in range(len(my_list)):
+            my = my_list[my_list_idx]
             dir_idx = my[2]
             nx, ny = dx[dir_idx], dy[dir_idx]
             my[0] = my[0] + nx
             my[1] = my[1] + ny
             if my[0] > x_max or my[0] < x_min or my[1] > y_max or my[1] < y_min:  # 튀어 나갔을 경우 1000말고 더 작게 할수도 있을것 같다
                 my[4] = True
-                heapq.heappush(remove_list, idx * -1)
+                heapq.heappush(remove_list, my_list_idx * -1)
         for _ in range(len(remove_list)):
             heappop = heapq.heappop(remove_list) * -1
             my_list.pop(heappop)
-        for idx, my in enumerate(my_list):
+        for my_list_idx in range(len(my_list)):
+            my = my_list[my_list_idx]
             if my[4] == True:
                 continue
-            for i in list(range(0, idx)) + list(range(idx + 1, len(my_list))):
+            for i in list(range(0, my_list_idx)) + list(range(my_list_idx + 1, len(my_list))):
                 if my_list[i][4] == True:
                     continue
                 if (my[0] == my_list[i][0] and my[1] == my_list[i][1]) or (
@@ -60,16 +62,13 @@ for test_case_index in range(test_case_num):
                     result = result + my[3] + my_list[i][3]
                     my[3] = 0
                     my_list[i][3] = 0
-                    my[4] = True
                     my_list[i][4] = True
-                    heapq.heappush(remove_list, idx * -1)
+                    if my[4] != True:
+                        my[4] = True
+                        heapq.heappush(remove_list, my_list_idx * -1)
                     heapq.heappush(remove_list, i * -1)
-
         for _ in range(len(remove_list)):
             heappop = heapq.heappop(remove_list) * -1
-            try:
-                my_list.pop(heappop)
-            except IndexError:
-                continue
+            my_list.pop(heappop)
 
     print("#%d %d" % (test_case_index + 1, result))
