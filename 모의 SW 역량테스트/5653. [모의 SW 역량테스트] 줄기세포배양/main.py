@@ -47,6 +47,7 @@ def grow_cells():
             cell.append(temp_cell)
 
 
+# TODO 재민욱찡이랑 내가 뭐가 다른지 비교해보도록 하자
 test_case_num = int(input())
 for test_case_index in range(test_case_num):
     n, m, k = map(int, input().split())
