@@ -5,7 +5,7 @@ is_cutting = False
 
 def check_map(dir_idx: int, _peak: list):
     global my_list
-    global result
+    global current_count
     global max_result
     global is_cutting
     nx, ny = dx[dir_idx], dy[dir_idx]
@@ -41,7 +41,7 @@ def check_map(dir_idx: int, _peak: list):
 
 def dfs(_peak: list):
     global my_list
-    global result
+    global current_count
     global max_result
     if not 0 <= _peak[1] < n:
         return
@@ -81,7 +81,7 @@ for test_case_index in range(test_case_num):
             my_list[i][j] = [my_list[i][j], False]
     for peak in peak_list:
         my_list[peak[0]][peak[1]][1] = True
-        result = 1
+        current_count = 1
         dfs(peak)
         my_list[peak[0]][peak[1]][1] = False
     print("#%d %d" % (test_case_index + 1, max_result))

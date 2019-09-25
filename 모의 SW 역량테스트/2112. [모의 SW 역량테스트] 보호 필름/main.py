@@ -44,7 +44,7 @@ def is_success():
 test_case_num = int(input())
 for test_case_index in range(test_case_num):
     d, w, k = map(int, input().split())  # M : 총 이동시간, A : BC의 개수
-    result = 0
+    current_count = 0
     film_list = []
     home_dict = {}
     is_end = False
@@ -105,11 +105,11 @@ for test_case_index in range(test_case_num):
 
                 success = is_success()
                 if success == True:
-                    result = len(change_index_list)
+                    current_count = len(change_index_list)
                     is_end = True
                     break
                 for idx, saved_change_a in enumerate(saved_change_a_list_index):
                     film_list[saved_change_a] = saved_a[idx]
                 for idx, saved_change_b in enumerate(saved_change_b_list_index):
                     film_list[saved_change_b] = saved_b[idx]
-    print("#%d %d" % (test_case_index + 1, result))
+    print("#%d %d" % (test_case_index + 1, current_count))

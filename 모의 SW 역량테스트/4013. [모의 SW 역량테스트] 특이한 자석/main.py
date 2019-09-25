@@ -1,6 +1,6 @@
 test_case_num = int(input())
 for test_case_index in range(test_case_num):
-    result = 0
+    current_count = 0
     k = int(input())
     n = 4
     # 입력의 첫 번째 줄은 배열의 행 수입니다.
@@ -48,6 +48,6 @@ for test_case_index in range(test_case_num):
                 rotate__pop = magnet_list[rotate_index].pop(0)
                 magnet_list[rotate_index].append(rotate__pop)
     for idx, magnet in enumerate(magnet_list):
-        result += 2 ** idx * magnet[0]
+        current_count += 2 ** idx * magnet[0]
 
-    print("#%d %d" % (test_case_index + 1, result))
+    print("#%d %d" % (test_case_index + 1, current_count))

@@ -20,7 +20,7 @@ test_case_num = int(input())
 for test_case_index in range(test_case_num):
     size = int(input())
     num_list = []
-    result = 0
+    current_count = 0
     for _size in range(size):
         temp_list = list(map(int, input().split()))
         num_list.append(temp_list)
@@ -40,14 +40,14 @@ for test_case_index in range(test_case_num):
             else:
                 down_index += 1
             temp += num_list[right_index][down_index]
-            if result != 0 and temp > result:
+            if current_count != 0 and temp > current_count:
                 break
 
-        if result == 0 or temp < result:
-            result = temp
+        if current_count == 0 or temp < current_count:
+            current_count = temp
 
-    result += num_list[0][0]
+    current_count += num_list[0][0]
 
-    print("#%d %d" % (test_case_index + 1, result))
+    print("#%d %d" % (test_case_index + 1, current_count))
 
     # print output

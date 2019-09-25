@@ -6,7 +6,7 @@ def operating_cost(input_k):
 test_case_num = int(input())
 for test_case_index in range(test_case_num):
     n, m = map(int, input().split())  # M : 총 이동시간, A : BC의 개수
-    result = 0
+    current_count = 0
     home_dict = {}
 
     for i in range(n):
@@ -21,7 +21,7 @@ for test_case_index in range(test_case_num):
             start_point = (i, j)
             operating_distance = 0
             while True:
-                if operating_cost(operating_distance + 1) <= result:
+                if operating_cost(operating_distance + 1) <= current_count:
                     operating_distance += 1
                     continue
                 count = 0
@@ -33,9 +33,9 @@ for test_case_index in range(test_case_num):
                         if distance <= operating_distance:
                             count += 1
                 if count * m >= operating_cost(operating_distance + 1):  # 가능 ^^
-                    if result < count:
-                        result = count
+                    if current_count < count:
+                        current_count = count
                 operating_distance += 1
                 if operating_cost(operating_distance + 1) >= all_sum:
                     break
-    print("#%d %d" % (test_case_index + 1, result))
+    print("#%d %d" % (test_case_index + 1, current_count))

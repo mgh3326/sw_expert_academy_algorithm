@@ -4,7 +4,7 @@ dy = [0, 1, 0, -1]
 
 def grow_cells():
     global my_list
-    global result
+    global current_count
     if len(saved_remove_list) != 0:
         result -= saved_remove_list[0]
         for saved_remove_list_index in range(len(saved_remove_list) - 1):
@@ -53,7 +53,7 @@ for test_case_index in range(test_case_num):
     my_k = k // 2
     count = 0
     # 입력의 첫 번째 줄은 배열의 행 수입니다.
-    result = 0
+    current_count = 0
     my_list = []
     cell_list = []
     for i in range(2 * my_k + n):
@@ -63,7 +63,7 @@ for test_case_index in range(test_case_num):
         temp_list = list(map(int, input().split()))
         for temp_index in range(len(temp_list)):
             if temp_list[temp_index] != 0:
-                result += 1
+                current_count += 1
                 try:
                     cell_list[temp_list[temp_index]].append([
                         (my_k + i, my_k + temp_index),
@@ -84,4 +84,4 @@ for test_case_index in range(test_case_num):
         # for _map in my_list:
         #     print(_map)
         grow_cells()
-    print("#%d %d" % (test_case_index + 1, result))
+    print("#%d %d" % (test_case_index + 1, current_count))

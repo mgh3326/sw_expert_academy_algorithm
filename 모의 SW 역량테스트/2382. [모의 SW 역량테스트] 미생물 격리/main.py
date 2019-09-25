@@ -17,7 +17,7 @@ def change_dir(input_dir):
 test_case_num = int(input())
 for test_case_index in range(test_case_num):
     n, m, k = map(int, input().split())  # M : 총 이동시간, A : BC의 개수
-    result = 0
+    current_count = 0
     runway_list = []
     microorganism_dict = {}
     # microorganism_list = []
@@ -33,7 +33,7 @@ for test_case_index in range(test_case_num):
     for _ in range(k):
         temp_list = list(map(int, input().split()))  # M : 총 이동시간, A : BC의 개수
         microorganism_dict[(temp_list[0], temp_list[1])] = [temp_list[2], temp_list[3] - 1]
-        result += temp_list[2]
+        current_count += temp_list[2]
     for m_index in range(m):
         next_microorganism_dict = {}
         overlap_dict = {}
@@ -45,9 +45,9 @@ for test_case_index in range(test_case_num):
                 if microorganism_size // 2 != 0:
 
                     next_microorganism_dict[new_point] = [microorganism_size // 2, change_dir(microorganism_dir)]
-                    result = result - (microorganism_size - (microorganism_size // 2))
+                    current_count = current_count - (microorganism_size - (microorganism_size // 2))
                 else:
-                    result -= microorganism_size
+                    current_count -= microorganism_size
             else:
                 if new_point in next_microorganism_dict:  # 중복이 있는 경우
                     if new_point in overlap_dict:
@@ -69,4 +69,4 @@ for test_case_index in range(test_case_num):
                     temp_dir = overlap[1]
             next_microorganism_dict[overlap_dict_key] = [temp_sum, temp_dir]
         microorganism_dict = next_microorganism_dict
-    print("#%d %d" % (test_case_index + 1, result))
+    print("#%d %d" % (test_case_index + 1, current_count))

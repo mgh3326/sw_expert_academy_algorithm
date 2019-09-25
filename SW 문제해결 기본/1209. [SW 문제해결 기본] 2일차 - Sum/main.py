@@ -3,12 +3,12 @@ array_size = 100
 for _ in range(test_case_num):
     test_case_index = int(input())
     arr_list = []
-    result = 0
+    current_count = 0
     for _ in range(array_size):
         temp_list = list(map(int, input().split()))
         _sum = sum(temp_list)  # 가로 합
-        if result == 0 or (_sum > result):
-            result = _sum
+        if current_count == 0 or (_sum > current_count):
+            current_count = _sum
         arr_list.append(temp_list)
     temp1 = 0
     temp2 = 0
@@ -18,11 +18,11 @@ for _ in range(test_case_num):
         temp = 0
         for j in range(array_size):
             temp += arr_list[j][i]
-        if temp > result:
-            result = temp
-    if temp1 > result:
-        result = temp1
-    if temp2 > result:
-        result = temp2
+        if temp > current_count:
+            current_count = temp
+    if temp1 > current_count:
+        current_count = temp1
+    if temp2 > current_count:
+        current_count = temp2
 
-    print("#%d %d" % (test_case_index, result))
+    print("#%d %d" % (test_case_index, current_count))

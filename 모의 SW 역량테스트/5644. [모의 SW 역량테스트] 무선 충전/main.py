@@ -37,7 +37,7 @@ for test_case_index in range(test_case_num):
     user_list = []
     bc_list = []
     bc_dict = {}
-    result = 0
+    current_count = 0
     power_list = []
     for _ in range(user_num):
         user_list.append(list(map(int, input().split())))
@@ -72,30 +72,30 @@ for test_case_index in range(test_case_num):
             b_list_top = b_list.pop(0)
         if a_list_top != None or b_list_top != None:
             if a_list_top == None:
-                result += power_list[b_list_top]
+                current_count += power_list[b_list_top]
             elif b_list_top == None:
-                result += power_list[a_list_top]
+                current_count += power_list[a_list_top]
             elif a_list_top != None and b_list_top != None:
                 if a_list_top == b_list_top:
                     if len(a_list) == 0 and len(b_list) == 0:
-                        result += power_list[b_list_top]
+                        current_count += power_list[b_list_top]
                     elif len(a_list) == 0:
-                        result += power_list[a_list_top]
+                        current_count += power_list[a_list_top]
                         pop = b_list.pop(0)
-                        result += power_list[pop]
+                        current_count += power_list[pop]
                     elif len(b_list) == 0:
-                        result += power_list[b_list_top]
+                        current_count += power_list[b_list_top]
                         pop = a_list.pop(0)
-                        result += power_list[pop]
+                        current_count += power_list[pop]
                     else:
                         a_pop_value = power_list[a_list.pop(0)]
                         b_pop_value = power_list[b_list.pop(0)]
-                        result += max(a_pop_value, b_pop_value)
-                        result += power_list[a_list_top]
+                        current_count += max(a_pop_value, b_pop_value)
+                        current_count += power_list[a_list_top]
 
                 else:
-                    result += power_list[b_list_top]
-                    result += power_list[a_list_top]
+                    current_count += power_list[b_list_top]
+                    current_count += power_list[a_list_top]
         if m_idx == m:
             break
 
@@ -108,4 +108,4 @@ for test_case_index in range(test_case_num):
             b_start_point[0] += person_dx[b_dir_dix]
             b_start_point[1] += person_dy[b_dir_dix]
 
-    print("#%d %d" % (test_case_index + 1, result))
+    print("#%d %d" % (test_case_index + 1, current_count))

@@ -33,6 +33,6 @@ for _size in range((size - 1) * (size - 1)):
 
 right_index = 0
 down_index = 0
-result = perm([1, 1, 2, 2])
-print(result)
+current_count = perm([1, 1, 2, 2])
+print(current_count)
 # print(my_list)

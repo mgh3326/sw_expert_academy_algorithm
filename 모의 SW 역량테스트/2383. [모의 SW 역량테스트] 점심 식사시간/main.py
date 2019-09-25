@@ -24,7 +24,7 @@ def dfs(input_value, is_append):  # 부분집합
 test_case_num = int(input())
 for test_case_index in range(test_case_num):
     n = int(input())
-    result = -1
+    current_count = -1
     room_list = []
     person_list = []
     stair_list = []
@@ -67,11 +67,11 @@ for test_case_index in range(test_case_num):
         while True:
             if len(stair_a_list) == 0 and len(stair_b_list) == 0 and len(current_a_list) == 0 and len(
                     current_b_list) == 0 and last_count == 0:
-                if result == -1 or result > count:
-                    result = count
+                if current_count == -1 or current_count > count:
+                    current_count = count
                 break
             count += 1
-            if result != -1 and count > result:
+            if current_count != -1 and count > current_count:
                 break
             last_count = 0
             for idx in reversed(range(len(stair_a_list))):
@@ -95,4 +95,4 @@ for test_case_index in range(test_case_num):
                     current_b_list.pop(idx)
                     last_count = 1
 
-    print("#%d %d" % (test_case_index + 1, result))
+    print("#%d %d" % (test_case_index + 1, current_count))

@@ -1,6 +1,6 @@
 def all_check(point, _map_list, direction):
     h, w = point
-    global result
+    global current_count
     global line
     remove_list = []
     if direction == 0:
@@ -78,7 +78,7 @@ def all_roll_back(point, _map_list, direction):
 
 
 def dfs(_map_list=None, _saved_list=[]):
-    global result
+    global current_count
     global max_result
     global line
     global min_line
@@ -112,7 +112,7 @@ test_case_num = int(input())
 
 for test_case_index in range(test_case_num):
     n = int(input())
-    result = 0
+    current_count = 0
 
     max_result = 0
     # 입력의 첫 번째 줄은 배열의 행 수입니다.
@@ -125,14 +125,14 @@ for test_case_index in range(test_case_num):
             for idx, temp in enumerate(temp_list):
                 if temp == 1:
                     temp_list[idx] = 2
-                    result += 1
+                    current_count += 1
 
         else:
             for idx, temp in enumerate(temp_list):
                 if idx == 0 or idx == n - 1:
                     if temp == 1:
                         temp_list[idx] = 2
-                        result += 1
+                        current_count += 1
                         # saved_list.append([(i, idx), True])
                 else:
                     if temp == 1:
@@ -140,7 +140,7 @@ for test_case_index in range(test_case_num):
 
         my_list.append(temp_list)
 
-    max_result = result
+    max_result = current_count
     line = 0
     min_line = n * n
     dfs(my_list, saved_list)

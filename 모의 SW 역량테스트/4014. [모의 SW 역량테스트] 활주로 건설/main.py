@@ -5,7 +5,7 @@ dy = [0, 1, 0, -1]
 test_case_num = int(input())
 for test_case_index in range(test_case_num):
     n, x = map(int, input().split())  # M : 총 이동시간, A : BC의 개수
-    result = 0
+    current_count = 0
     runway_list = []
     for _ in range(n):
         temp_list = list(map(int, input().split()))  # M : 총 이동시간, A : BC의 개수
@@ -19,7 +19,7 @@ for test_case_index in range(test_case_num):
         max1 = max(runway)
         min1 = min(runway)
         if max1 == min1:  # 가능 ^^
-            result += 1
+            current_count += 1
             continue
         # TODO 아래 조건을 창의적으로 할수 있을까? 예외처리를 해줌으로서 코드가 매우 지저분해졌다
         else:  # 올라갈때만 중요하다 내려올때는 이전에 있던게 중요치 않다
@@ -61,8 +61,8 @@ for test_case_index in range(test_case_num):
             if is_end == True:  # 하강 중이었는지 확인 할 필요가 있네
                 if is_down == True:
                     if temp_count >= x:
-                        result += 1
+                        current_count += 1
                 else:
-                    result += 1
+                    current_count += 1
 
-    print("#%d %d" % (test_case_index + 1, result))
+    print("#%d %d" % (test_case_index + 1, current_count))

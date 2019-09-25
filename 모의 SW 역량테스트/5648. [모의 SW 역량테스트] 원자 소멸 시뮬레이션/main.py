@@ -8,7 +8,7 @@ test_case_num = int(input())
 for test_case_index in range(test_case_num):
     n = int(input())
     # 입력의 첫 번째 줄은 배열의 행 수입니다.
-    result = 0
+    current_count = 0
     warm_hall_list = []
     block_dict = {}
     my_list = []  # 맵 정보
@@ -62,6 +62,6 @@ for test_case_index in range(test_case_num):
                     remove_list.pop()
                     continue
             if (my[0], my[1]) in remove_atom_list:
-                result += my[3]
+                current_count += my[3]
                 my_list.pop(my_list_idx)
-    print("#%d %d" % (test_case_index + 1, result))
+    print("#%d %d" % (test_case_index + 1, current_count))

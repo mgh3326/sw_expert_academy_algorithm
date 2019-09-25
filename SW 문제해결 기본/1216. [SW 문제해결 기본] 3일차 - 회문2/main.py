@@ -3,7 +3,7 @@ arr_size = 100
 for test_case_index in range(10):
     arr_list = []
     test_case_index_number = int(input())
-    result = 0
+    current_count = 0
     is_end = False
     for _ in range(arr_size):
         temp_list = input()
@@ -12,7 +12,7 @@ for test_case_index in range(10):
         if is_end:
             break
         if str_length == 1:
-            result = 1
+            current_count = 1
             break
 
         for i in range(arr_size):
@@ -26,7 +26,7 @@ for test_case_index in range(10):
                     if temp_str[_l] != temp_str[str_length - _l - 1]:
                         break
                     if _l == (str_length // 2) - 1:
-                        result = str_length
+                        current_count = str_length
                         is_end = True
             for j in range(arr_size - str_length + 1):
                 if is_end:
@@ -38,7 +38,7 @@ for test_case_index in range(10):
                     if temp_str[_l] != temp_str[str_length - _l - 1]:
                         break
                     if _l == (str_length // 2) - 1:
-                        result = str_length
+                        current_count = str_length
                         is_end = True
 
-    print("#%d %d" % (test_case_index_number, result))
+    print("#%d %d" % (test_case_index_number, current_count))

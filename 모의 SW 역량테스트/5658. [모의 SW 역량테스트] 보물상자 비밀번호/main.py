@@ -2,7 +2,7 @@ test_case_num = int(input())
 
 for test_case_index in range(test_case_num):
     n, k = map(int, input().split())
-    result = 0
+    current_count = 0
     s = input()
     my_list = []
     count = 0
