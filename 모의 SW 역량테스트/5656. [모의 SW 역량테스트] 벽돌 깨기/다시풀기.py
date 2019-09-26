@@ -46,7 +46,6 @@ def dfs(depth):
             h += 1
         if len(remove_dict) == 0:  # 백트레킹
             continue
-        # TODO 내리기 부분이 꽤 삐리한것 같다
         down_dict = {}
         for _w in w_list:
             current_h = height - 1
@@ -68,6 +67,7 @@ def dfs(depth):
                             break
                         temp_h -= 1
                 current_h -= 1
+        # TODO List의 갯수를 다시 읽지 않고, 따로 저장해서 주면 시간의 이득을 취할수 있을 것으로 생각된다. Python 재귀함수에서 int value 를 어떻게 넘겨줄수 있을까?
         for remove_dict_value in remove_dict.values():
             current_block_count -= len(remove_dict_value)
         if current_block_count < result:
