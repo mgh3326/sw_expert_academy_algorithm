@@ -9,10 +9,9 @@ class Node:
 
 
 class Trie:
+
     def __init__(self):
         self.root = Node()
-        self.current_value = ""
-        self.count = 0
 
     def insert(self, input_str):
         node = self.root
@@ -34,29 +33,32 @@ class Trie:
 
     def find_index_value(self, input_index):
         self.dfs(self.root, input_index)
-        return self.current_value
 
     def dfs(self, node, input_index):
+        global count
+        global current_value
         keys = sorted(node.child.keys())
         parent_node = node
         for key in keys:
             node = node.child[key]
-            self.current_value += key
-            self.count += 1
-            if self.count == input_index:
+            current_value += key
+            count += 1
+            if count == input_index:
                 return True
             if self.dfs(node, input_index):
                 return True
             node = parent_node
-            self.current_value = self.current_value[:-1]
+            current_value = current_value[:-1]
 
 
 test_case_num = int(input())
 for test_case_index in range(test_case_num):
+    current_value = ""
+    count = 0
     n, temp_str = input().split()
     n = int(n)
     trie = Trie()
     for i in range(len(temp_str)):
         trie.insert(temp_str[i:])
-    result = trie.find_index_value(n)
-    print("#%d %s %d" % (test_case_index + 1, result[0], len(result)))
+    trie.find_index_value(n)
+    print("#%d %s %d" % (test_case_index + 1, current_value[0], len(current_value)))
