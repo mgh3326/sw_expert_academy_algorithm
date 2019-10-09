@@ -27,9 +27,9 @@ def bomb(input_h, input_w, input_remove_dict, input_w_list):
 
 
 def dfs(depth):
-    global current_count
+    global current_block_count
     global result
-    if depth == n + 1:
+    if result == 0 or depth == n:
         return
     for w in range(width):
         remove_dict = {}
@@ -44,12 +44,11 @@ def dfs(depth):
                 bomb(h, w, remove_dict, w_list)
                 break
             h += 1
-        # TODO 내리기 부분이 꽤 삐리한것 같다
+        if len(remove_dict) == 0:  # 백트레킹
+            continue
         down_dict = {}
-        current_h = height - 1
         for _w in w_list:
-            if _w == w:
-                continue
+            current_h = height - 1
             while True:
                 if current_h < 0:
                     break
@@ -68,15 +67,17 @@ def dfs(depth):
                             break
                         temp_h -= 1
                 current_h -= 1
-        current_count += len(remove_dict.values())
-        if current_count > result:
-            result = current_count
+        # TODO List의 갯수를 다시 읽지 않고, 따로 저장해서 주면 시간의 이득을 취할수 있을 것으로 생각된다. Python 재귀함수에서 int value 를 어떻게 넘겨줄수 있을까?
+        for remove_dict_value in remove_dict.values():
+            current_block_count -= len(remove_dict_value)
+        if current_block_count < result:
+            result = current_block_count
         dfs(depth + 1)
         for remove_dict_key in remove_dict.keys():
             for remove_dict_value in remove_dict[remove_dict_key]:
                 h, w = remove_dict_value
                 board_list[h][w] = remove_dict_key
-                current_count -= 1
+                current_block_count += 1
         for down_dict_key in down_dict.keys():
             for down_dict_value in down_dict[down_dict_key]:
                 h, w = down_dict_value
@@ -87,12 +88,15 @@ def dfs(depth):
 
 test_case_num = int(input())
 for test_case_index in range(test_case_num):
-    current_count = 0
-    result = 0
     n, width, height = map(int, input().split())
     board_list = []
+    current_block_count = 0
     for _h in range(height):
         temp_list = list(map(int, input().split()))
+        for temp in temp_list:
+            if temp != 0:
+                current_block_count += 1
         board_list.append(temp_list)
+    result = current_block_count
     dfs(0)
     print("#%d %d" % (test_case_index + 1, result))

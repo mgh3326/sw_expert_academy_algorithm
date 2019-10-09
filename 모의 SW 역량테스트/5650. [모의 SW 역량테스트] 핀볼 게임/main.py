@@ -69,7 +69,7 @@ test_case_num = int(input())
 for test_case_index in range(test_case_num):
     n = int(input())
     # 입력의 첫 번째 줄은 배열의 행 수입니다.
-    current_count = 0
+    result = 0
     max_result = 0
     warm_hall_list = []
     block_dict = {}
