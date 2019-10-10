@@ -1,6 +1,6 @@
 import sys
 
-sys.stdin = open("./input_origin.txt")
+sys.stdin = open("./input.txt")
 
 test_case_num = int(input())
 for test_case_index in range(test_case_num):
