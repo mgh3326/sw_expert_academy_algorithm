@@ -17,18 +17,16 @@ for test_case_index in range(test_case_num):
     start_index = 0
     visit_list = [False] * vertex_num
     value_list = [-1] * vertex_num
-    current_vertex = vertex_num
-    current_vertex -= 1
     visit_list[start_index] = True
     value_list[start_index] = 0
     current_index = start_index
     current_value = 0
     while True:
-        if current_vertex == 0:
+        if current_index == vertex_num - 1:
             break
         for idx, board in enumerate(board_list[current_index]):
-            if board != 0 and (value_list[idx] == -1 or value_list[idx] > board):
-                value_list[idx] = board
+            if board != 0 and (value_list[idx] == -1 or value_list[idx] > board + current_value):
+                value_list[idx] = board + current_value
         temp_min_value = -1
         temp_min_idx = 0
         for idx, value in enumerate(value_list):
@@ -36,10 +34,8 @@ for test_case_index in range(test_case_num):
                 if temp_min_value == -1 or temp_min_value > value_list[idx]:
                     temp_min_value = value_list[idx]
                     temp_min_idx = idx
-        current_value = temp_min_value
-        result += temp_min_value
+        current_value += temp_min_value
         current_index = temp_min_idx
         visit_list[current_index] = True
-        current_vertex -= 1
-
+    result = value_list[-1]
     print("#%d %d" % (test_case_index + 1, result))
