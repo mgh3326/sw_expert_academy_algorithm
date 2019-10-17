@@ -77,6 +77,8 @@ for test_case_index in range(test_case_num):
     warm_hall_dict = {}
     N = int(input())
     for h in range(N):
+        temp_list = []
+        temp_list.append(5)
         temp_list = list(map(int, input().split()))
         temp_visit_list = []
         for w in range(len(temp_list)):
