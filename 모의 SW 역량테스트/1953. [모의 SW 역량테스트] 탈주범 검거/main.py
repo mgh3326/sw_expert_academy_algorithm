@@ -30,7 +30,7 @@ for test_case_index in range(test_case_num):
         if len(queue) == 0:
             break
         current_h, current_w, depth = queue.pop(0)
-        if depth == tunnel_l:  # TODO BFS 일때 queue에 담기 이전에 조건이 충족되면 끝내는 것을 고려해주어야한다.
+        if depth == tunnel_l:  # (해결) BFS 일때 queue에 담기 이전에 조건이 충족되면 끝내는 것을 고려해주어야한다.
             continue
         for dir_idx in tunnel_dict[(tunnel_board_list[current_h][current_w])]:
             next_h = current_h + dh[dir_idx]

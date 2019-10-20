@@ -1,7 +1,7 @@
 import sys
 
 sys.stdin = open("./data/sample_input.txt")
-# TODO 풀다 도망
+# (해결) 풀다 도망
 block_dict = {
     1: [1, 3, 0, 2],
     2: [3, 0, 1, 2],
@@ -41,13 +41,16 @@ for test_case_index in range(test_case_num):
         for start_w in range(1, N + 1):
             if board_list[start_h][start_w] != 0:
                 continue
-            for current_dir in range(4):
+            for start_dir in range(4):
+                current_dir = start_dir
                 current_h, current_w = start_h, start_w
                 score = 0
-                count = 0
+                is_first = True
                 while True:
-                    if (count != 0 and start_h == current_h and start_w == current_w) or board_list[current_h][
+                    if (is_first is False and start_h == current_h and start_w == current_w) or board_list[current_h][
                         current_w] == -1:  # 시작점으로 와버림 또는 블랙홀
+                        if score > result:
+                            result = score
                         break
                     if 1 <= board_list[current_h][current_w] <= 5:
                         current_dir = block_dict[board_list[current_h][current_w]][current_dir]
@@ -56,8 +59,7 @@ for test_case_index in range(test_case_num):
                         (current_h, current_w) = warm_hall_dict[current_h, current_w]
                     dh, dw = dir_list[current_dir]
                     current_h, current_w = dh + current_h, dw + current_w
-                    count += 1
-                if score > result:
-                    result = score
+
+                    is_first = False
 
     print("#%d %d" % (test_case_index + 1, result))
