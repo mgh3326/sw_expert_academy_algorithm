@@ -1,38 +1,65 @@
 import sys
 
 sys.stdin = open("./data/sample_input.txt")
-
-dh = [-1, 1, 0, 0]  # 상 하 좌 우
-dw = [0, 0, -1, 1]  # 상 하 좌 우
-
-
-def dfs(input_h, input_w, score, depth, input_dir_idx):
-    if depth != 0 and input_h == start_h and input_w == start_w:
-        return
-
+# (해결) 풀다 도망
+block_dict = {
+    1: [1, 3, 0, 2],
+    2: [3, 0, 1, 2],
+    3: [2, 0, 3, 1],
+    4: [1, 2, 3, 0],
+    5: [1, 0, 3, 2],
+}
+dir_list = [
+    [-1, 0],  # 상
+    [1, 0],  # 하
+    [0, -1],  # 좌
+    [0, 1],  # 우
+]
 
 test_case_num = int(input())
 for test_case_index in range(test_case_num):
     result = 0
-    board_value_list = []
-    visit_list = []
+    N = int(input())
+    board_list = [[5] * (N + 2)]
     warm_hall_dict = {}
-    n = int(input())
-    for h in range(n):
-        temp_list = list(map(int, input().split()))
-        temp_visit_list = []
-        for w in range(len(temp_list)):
-            visit_value = []
-            temp_value = temp_list[w]
-            if temp_value == 0:
-                visit_value = [-1] * len(dh)
-            temp_visit_list.append(visit_value)
-        visit_list.append(temp_visit_list)
-        board_value_list.append(temp_list)
-    for start_h in range(n):
-        for start_w in range(n):
-            if board_value_list[start_h][start_w] == 0:
-                for dir_idx in range(len(dh)):
-                    dfs(start_h, start_w, 0, 0, dir_idx)
+    for h in range(N):
+        temp_list = [5]
+        temp_list.extend(list(map(int, input().split())))
+        for w in range(1, len(temp_list)):
+            if temp_list[w] > 5:
+                if temp_list[w] not in warm_hall_dict:
+                    warm_hall_dict[temp_list[w]] = (h + 1, w)
+                else:
+                    warm_hall_dict[h + 1, w] = warm_hall_dict[temp_list[w]]
+                    warm_hall_dict[warm_hall_dict[temp_list[w]]] = (h + 1, w)
+                    warm_hall_dict.pop(temp_list[w])
+
+        temp_list.append(5)
+        board_list.append(temp_list)
+    board_list.append([5] * (N + 2))
+    for start_h in range(1, N + 1):
+        for start_w in range(1, N + 1):
+            if board_list[start_h][start_w] != 0:
+                continue
+            for start_dir in range(4):
+                current_dir = start_dir
+                current_h, current_w = start_h, start_w
+                score = 0
+                is_first = True
+                while True:
+                    if (is_first is False and start_h == current_h and start_w == current_w) or board_list[current_h][
+                        current_w] == -1:  # 시작점으로 와버림 또는 블랙홀
+                        if score > result:
+                            result = score
+                        break
+                    if 1 <= board_list[current_h][current_w] <= 5:
+                        current_dir = block_dict[board_list[current_h][current_w]][current_dir]
+                        score += 1
+                    elif board_list[current_h][current_w] > 5:
+                        (current_h, current_w) = warm_hall_dict[current_h, current_w]
+                    dh, dw = dir_list[current_dir]
+                    current_h, current_w = dh + current_h, dw + current_w
+
+                    is_first = False
 
     print("#%d %d" % (test_case_index + 1, result))

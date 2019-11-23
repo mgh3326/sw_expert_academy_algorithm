@@ -39,7 +39,7 @@ def is_success():
     return True
 
 
-# TODO 메모리를 남들보다 2배 사용했다. 아마도 부분집합을 이용하는 것을 2번 사용해서 그런듯 하다 부분집합을 효율적으로 구하는 방법을 얼른 공부하도록 해야겠다.
+# (해결) 메모리를 남들보다 2배 사용했다. 아마도 부분집합을 이용하는 것을 2번 사용해서 그런듯 하다 부분집합을 효율적으로 구하는 방법을 얼른 공부하도록 해야겠다.
 # init
 test_case_num = int(input())
 for test_case_index in range(test_case_num):

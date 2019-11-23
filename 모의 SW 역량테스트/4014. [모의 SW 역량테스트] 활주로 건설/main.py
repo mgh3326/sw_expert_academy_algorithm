@@ -21,7 +21,7 @@ for test_case_index in range(test_case_num):
         if max1 == min1:  # 가능 ^^
             current_count += 1
             continue
-        # TODO 아래 조건을 창의적으로 할수 있을까? 예외처리를 해줌으로서 코드가 매우 지저분해졌다
+        # (해결) 아래 조건을 창의적으로 할수 있을까? 예외처리를 해줌으로서 코드가 매우 지저분해졌다 [visit list 활용]
         else:  # 올라갈때만 중요하다 내려올때는 이전에 있던게 중요치 않다
             is_end = True
             is_down = False
